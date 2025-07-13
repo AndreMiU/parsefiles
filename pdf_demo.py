@@ -10,12 +10,12 @@ def extract_tables_with_lines(page):
     table_settings = {
         "vertical_strategy": "lines",
         "horizontal_strategy": "lines",
-        "snap_tolerance": 5,
-        "join_tolerance": 5,
+        "snap_tolerance": 4,
+        "join_tolerance": 4,
         "edge_min_length": 10,
-        "text_tolerance": 5,
-        "text_x_tolerance": 5,
-        "text_y_tolerance": 5,
+        "text_tolerance": 4,
+        "text_x_tolerance": 4,
+        "text_y_tolerance": 4,
     }
 
     raw_tables = page.find_tables(table_settings)

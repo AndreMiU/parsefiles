@@ -10,10 +10,7 @@ from docx.text.paragraph import Paragraph
 
 
 def iter_block_items(parent):
-    """
-    Генератор, который последовательно возвращает все элементы документа
-    (параграфы и таблицы) в порядке их следования
-    """
+    
     if isinstance(parent, _Document):
         parent_elm = parent.element.body
     else:
@@ -27,13 +24,7 @@ def iter_block_items(parent):
 
 
 def parse_directory_docs(directory_path):
-    """
-    Парсит все DOCX-файлы в директории, извлекая текст и таблицы
-    и сохраняя результаты в JSON формате
-
-    Args:
-        directory_path (str): Путь к директории с DOCX-файлами
-    """
+  
     dir_path = Path(directory_path)
 
     if not dir_path.is_dir():
@@ -45,7 +36,6 @@ def parse_directory_docs(directory_path):
 
     print(f"Начало обработки DOCX-файлов в директории: {dir_path}")
 
-    # Ищем все DOCX-файлы (включая поддиректории)
     docx_files = list(dir_path.glob("**/*.docx"))
 
     if not docx_files:
@@ -65,18 +55,10 @@ def parse_directory_docs(directory_path):
 
 
 def process_docx_file(docx_path, output_dir):
-    """
-    Обрабатывает один DOCX-файл, извлекая текст и таблицы
-    и сохраняя результаты в JSON формате
-
-    Args:
-        docx_path (Path): Путь к DOCX-файлу
-        output_dir (Path): Директория для сохранения результатов
-    """
+   
     base_name = docx_path.stem
     document_structure = extract_document_structure(docx_path)
 
-    # Сохраняем структуру документа в JSON
     json_output = output_dir / f"{base_name}.json"
     with open(json_output, "w", encoding="utf-8") as json_file:
         json.dump(document_structure, json_file, ensure_ascii=False, indent=2)
@@ -85,15 +67,6 @@ def process_docx_file(docx_path, output_dir):
 
 
 def extract_document_structure(docx_path):
-    """
-    Извлекает структуру документа (текст и таблицы) в формате JSON
-
-    Args:
-        docx_path (Path): Путь к DOCX-файлу
-
-    Returns:
-        dict: Структура документа в виде словаря, пригодного для JSON
-    """
 
     doc = docx.Document(docx_path)
     document_data = {
@@ -156,12 +129,10 @@ def extract_document_structure(docx_path):
             document_data["statistics"]["table_rows"] += total_rows
             document_data["statistics"]["table_cells"] += total_cells
 
-    # Добавляем общую статистику
     document_data["statistics"]["total_elements"] = element_counter
 
     return document_data
 
-# Запуск обработки
-if __name__ == "__main__":
-    target_directory = "D:\\Тесты"
-    parse_directory_docs(target_directory)
+#Пример использования
+target_directory = "Входная директория"
+parse_directory_docs(target_directory)

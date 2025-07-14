@@ -3,7 +3,7 @@ import json
 import pandas as pd
 from pathlib import Path
 
-
+#Поиск файлов формата excel в указанной директории
 def parse_directory_excel(directory_path):
    
     dir_path = Path(directory_path)

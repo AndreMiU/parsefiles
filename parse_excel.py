@@ -3,9 +3,7 @@ import json
 import pandas as pd
 from pathlib import Path
 
-#Поиск файлов формата excel в указанной директории
 def parse_directory_excel(directory_path):
-   
     dir_path = Path(directory_path)
 
     if not dir_path.is_dir():
@@ -31,7 +29,6 @@ def parse_directory_excel(directory_path):
 
 
 def process_excel_file(excel_path, output_dir):
-
     base_name = excel_path.stem
     json_output = output_dir / f"{base_name}.json"
 
@@ -40,40 +37,35 @@ def process_excel_file(excel_path, output_dir):
         "sheets": []
     }
 
-    try:
-        
-        xls = pd.ExcelFile(excel_path)
+    # Без обработки исключений при открытии файла
+    xls = pd.ExcelFile(excel_path)
 
-        for sheet_name in xls.sheet_names:
-            
-            df = pd.read_excel(
-                xls,
-                sheet_name=sheet_name,
-                header=None,
-                dtype=str,
-                na_filter=False
-            )
+    for sheet_name in xls.sheet_names:
+        df = pd.read_excel(
+            xls,
+            sheet_name=sheet_name,
+            header=None,
+            dtype=str,
+            na_filter=False
+        )
 
-            # Заменяем NaN на пустые строки и преобразуем в список
-            sheet_data = df.fillna("").values.tolist()
+        # Заменяем NaN на пустые строки и преобразуем в список
+        sheet_data = df.fillna("").values.tolist()
 
-            results["sheets"].append({
-                "sheet_name": sheet_name,
-                "data": sheet_data
-            })
+        results["sheets"].append({
+            "sheet_name": sheet_name,
+            "data": sheet_data
+        })
 
-        
-        with open(json_output, "w", encoding="utf-8") as json_file:
-            json.dump(results, json_file, ensure_ascii=False, indent=4)
+    # Сохранение результатов в JSON
+    with open(json_output, "w", encoding="utf-8") as json_file:
+        json.dump(results, json_file, ensure_ascii=False, indent=4)
 
-        print(f"Файл обработан: {excel_path.name}")
-        print(f"  Листов: {len(results['sheets'])}" )
-        print(f"  Результаты сохранены в: {json_output}")
-
-    except Exception as e:
-        print(f"Ошибка при обработке файла {excel_path}: {str(e)}")
+    print(f"Файл обработан: {excel_path.name}")
+    print(f"  Листов: {len(results['sheets'])}")
+    print(f"  Результаты сохранены в: {json_output}")
 
 
-#Пример использования
-target_directory = "D:\\Тесты"
+# Пример использования
+target_directory = "Входная директория"
 parse_directory_excel(target_directory)

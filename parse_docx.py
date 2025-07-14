@@ -8,7 +8,7 @@ from docx.oxml.text.paragraph import CT_P
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
-
+#Генератор, который последовательно возвращает все блоки (параграфы и таблицы) в документе или ячейке таблицы в порядке их появления.
 def iter_block_items(parent):
     
     if isinstance(parent, _Document):
@@ -22,7 +22,7 @@ def iter_block_items(parent):
         elif isinstance(child, CT_Tbl):
             yield Table(child, parent)
 
-
+#Поиск файло формата docx в директории
 def parse_directory_docs(directory_path):
   
     dir_path = Path(directory_path)
@@ -53,7 +53,7 @@ def parse_directory_docs(directory_path):
 
     print("\nОбработка всех файлов завершена!")
 
-
+Обработка одного файла
 def process_docx_file(docx_path, output_dir):
    
     base_name = docx_path.stem
@@ -65,7 +65,7 @@ def process_docx_file(docx_path, output_dir):
 
     print(f"Результаты сохранены в: {json_output}")
 
-
+Извлечение структуры документа
 def extract_document_structure(docx_path):
 
     doc = docx.Document(docx_path)

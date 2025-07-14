@@ -5,11 +5,7 @@ from pathlib import Path
 
 
 def parse_directory_excel(directory_path):
-    """
-    Парсит все Excel-файлы в директории
-    Args:
-        directory_path (str): Путь к директории с Excel-файлами
-    """
+   
     dir_path = Path(directory_path)
 
     if not dir_path.is_dir():
@@ -35,12 +31,7 @@ def parse_directory_excel(directory_path):
 
 
 def process_excel_file(excel_path, output_dir):
-    """
-    Обрабатывает Excel-файл и извлекает данные из всех листов
-    Args:
-        excel_path (Path): Путь к Excel-файлу
-        output_dir (Path): Директория для сохранения результатов
-    """
+
     base_name = excel_path.stem
     json_output = output_dir / f"{base_name}.json"
 
@@ -50,11 +41,11 @@ def process_excel_file(excel_path, output_dir):
     }
 
     try:
-        # Читаем все листы Excel-файла
+        
         xls = pd.ExcelFile(excel_path)
 
         for sheet_name in xls.sheet_names:
-            # Читаем данные листа как строки без преобразования типов
+            
             df = pd.read_excel(
                 xls,
                 sheet_name=sheet_name,
@@ -71,7 +62,7 @@ def process_excel_file(excel_path, output_dir):
                 "data": sheet_data
             })
 
-        # Сохранение результатов в JSON
+        
         with open(json_output, "w", encoding="utf-8") as json_file:
             json.dump(results, json_file, ensure_ascii=False, indent=4)
 
@@ -83,6 +74,6 @@ def process_excel_file(excel_path, output_dir):
         print(f"Ошибка при обработке файла {excel_path}: {str(e)}")
 
 
-
+#Пример использования
 target_directory = "D:\\Тесты"
 parse_directory_excel(target_directory)

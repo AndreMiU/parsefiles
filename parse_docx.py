@@ -53,7 +53,7 @@ def parse_directory_docs(directory_path):
 
     print("\nОбработка всех файлов завершена!")
 
-Обработка одного файла
+#Обработка одного файла
 def process_docx_file(docx_path, output_dir):
    
     base_name = docx_path.stem

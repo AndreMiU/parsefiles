@@ -66,6 +66,6 @@ def process_excel_file(excel_path, output_dir):
     print(f"  Результаты сохранены в: {json_output}")
 
 
-# Пример использования
-target_directory = "Входная директория"
-parse_directory_excel(target_directory)
+if __name__ == "__main__":
+    target_directory = "D:\\Тест"
+    parse_directory_excel(target_directory)

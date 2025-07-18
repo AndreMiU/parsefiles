@@ -5,13 +5,7 @@ from pathlib import Path
 
 
 def parse_directory_excel(directory_path):
-    """
-    Парсит все Excel-файлы в директории
-    Args:
-        directory_path (str): Путь к директории с Excel-файлами
-    Returns:
-        list: Список путей к созданным JSON-файлам
-    """
+    
     dir_path = Path(directory_path)
 
     if not dir_path.is_dir():
@@ -44,15 +38,7 @@ def parse_directory_excel(directory_path):
 
 
 def process_excel_file(excel_path, output_dir):
-    """
-    Обрабатывает Excel-файл: каждый лист сохраняет в отдельный JSON
-    и возвращает список путей к созданным JSON-файлам.
-    Args:
-        excel_path (Path): Путь к Excel-файлу
-        output_dir (Path): Директория для сохранения результатов
-    Returns:
-        list: Список путей к созданным JSON-файлам
-    """
+   
     base_name = excel_path.stem
     file_output_dir = output_dir / base_name
     file_output_dir.mkdir(parents=True, exist_ok=True)
@@ -114,13 +100,7 @@ def process_excel_file(excel_path, output_dir):
 
 
 def load_json_to_dataframe(json_path):
-    """
-    Загружает JSON-файл в pandas DataFrame
-    Args:
-        json_path (str/Path): Путь к JSON-файлу
-    Returns:
-        pd.DataFrame: DataFrame с данными из JSON
-    """
+  
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     return pd.DataFrame(data)
@@ -150,5 +130,3 @@ if __name__ == "__main__":
         csv_path = Path(first_json).with_suffix('.csv')
         df.to_csv(csv_path, index=False, encoding='utf-8')
         print(f"\nПолный DataFrame сохранен в CSV: {csv_path}")
-    else:
-        print("\nНет обработанных файлов для демонстрации")
